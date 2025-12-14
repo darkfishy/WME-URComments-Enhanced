@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        WME URComments-Enhanced
 // @namespace   https://greasyfork.org/users/166843
-// @version     2025.07.29.01
+// @version     2025.12.09.01
 // eslint-disable-next-line max-len
 // @description URComments-Enhanced (URC-E) allows Waze editors to handle WME update requests more quickly and efficiently. Also adds many UR filtering options, ability to change the markers, plus much, much, more!
 // @grant       GM_xmlhttpRequest
@@ -14,6 +14,8 @@
 // @connect     sheets.googleapis.com
 // @icon        data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAwCAYAAACFUvPfAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjQyQjZDNjdEODYzODExRTRBRDY0Q0I2QjA1MjU4N0EyIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjQyQjZDNjdFODYzODExRTRBRDY0Q0I2QjA1MjU4N0EyIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NDJCNkM2N0I4NjM4MTFFNEFENjRDQjZCMDUyNTg3QTIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NDJCNkM2N0M4NjM4MTFFNEFENjRDQjZCMDUyNTg3QTIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6++Bk8AAANOElEQVR42tRZ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
 // @contributionURL https://github.com/WazeDev/Thank-The-Authors
+// @downloadURL https://update.greasyfork.org/scripts/375430/WME%20URComments-Enhanced.user.js
+// @updateURL https://update.greasyfork.org/scripts/375430/WME%20URComments-Enhanced.meta.js
 // ==/UserScript==
 
 /* global unsafeWindow, GM_info, GM_xmlhttpRequest, I18n, OpenLayers, trustedTypes W, WazeWrap */
@@ -204,16 +206,16 @@
             if (mutations
                 .filter((mutation) => (mutation.type === 'childList'))
                 .filter((mutation) => (
-                    (mutation.target === document.getElementById('panel-container'))
+                    (mutation.target === document.getElementsByClassName('overlay-container')[0])
                     && (Array.from(mutation.addedNodes).some((node) => (
-                        (node.firstChild?.nodeName === "WZ-CARD") && (node.firstChild?.classList.contains('mapUpdateRequest')))
+                        (node.lastChild?.nodeName === "WZ-CARD") && (node.lastChild?.classList.contains('mapUpdateRequest')))
                     ))
                 ))
                 .length > 0
             )
                 handleUpdateRequestContainer();
             else if (_selUr.handling
-                && (document.getElementById('panel-container').children.length === 0)
+                && (document.getElementsByClassName('overlay-container')[0].children.length <= 2)
             )
                 handleAfterCloseUpdateContainer();
         }),
@@ -980,10 +982,11 @@
         let data = {};
         try {
             data = await W.controller.descartesClient.getUpdateRequestSessionsByIds(urIds);
-            if (data?.updateRequestSessions?.objects.length > 0)
+            data = {updateRequestSessions: data.map(ur => ur.updateRequestSessions?.objects).flat()};
+            if (data?.updateRequestSessions?.length > 0)
                 // 2023.04.05.01: No need to merge the data to the W.map.mapUpdateRequests repo. Let WME control that repo.
                 // W.model.mergeResponse(data);
-                data = Object.fromEntries(data.updateRequestSessions.objects.map((o) => [o.getID(), o]));
+                data = Object.fromEntries(data.updateRequestSessions.map((o) => [o.getID(), o]));
             else
                 data = {};
         }
@@ -1016,7 +1019,7 @@
                 domElem.firstChild.appendChild(divElemRoot);
             }
             if (_settings.reverseCommentSort) {
-                const commentList = await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation.section .conversation-view .comment-list'),
+                const commentList = await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation.section .conversation-view .comment-list'),
                     numComments = commentList.children.length;
                 domElem.remove();
                 commentList.insertBefore(domElem, commentList.firstChild);
@@ -1167,14 +1170,14 @@
             }
         }
         await updateUrceData(getMapUrsObjArr([_selUr.urId]));
-        let domElement = await getDomElement('#panel-container div[class^="container"] .sub-title');
+        let domElement = await getDomElement('.overlay-container div[class^="container"] .sub-title');
         if (!domElement) {
             handleReadyError(true, true, 'handleUpdateRequestContainer', false, 'isDomElementReady: .sub-title');
             return;
         }
         if (!domElement.textContent.includes(_selUr.urId))
             domElement.append(` (${_selUr.urId}) `);
-        domElement = await getDomElement('#panel-container div[class^="container"] .reported');
+        domElement = await getDomElement('.overlay-container div[class^="container"] .reported');
         if (!domElement) {
             handleReadyError(true, true, 'handleUpdateRequestContainer', false, '');
             return;
@@ -1184,7 +1187,7 @@
         if (!domElement.textContent.endsWith(')'))
             domElement.textContent += ` (${parseDaysAgo(_mapUpdateRequests[_selUr.urId].urceData.driveDaysOld)})`;
         if (mapUrObj.getAttribute('description')) {
-            const content = await getDomElement('#panel-container div[class^="container"] .body .problem-data .description .content');
+            const content = await getDomElement('.overlay-container div[class^="container"] .body .problem-data .description .content');
             if (content?.children.length === 0) {
                 const divElemRoot = createElem('div', { class: 'URCE-divDesc', textContent: content.textContent });
                 content.textContent = '';
@@ -1192,11 +1195,11 @@
             }
         }
         if (_mapUpdateRequests[_selUr.urId].urceData.commentCount > 0) {
-            if (!(await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .comment .comment-title'))) {
+            if (!(await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .comment .comment-title'))) {
                 handleReadyError(false, false, '', false, 'isConversationLoaded: loadingConversation');
             }
             else {
-                const comments = document.querySelectorAll('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .comment .comment-title');
+                const comments = document.querySelectorAll('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .comment .comment-title');
                 for (let idx = 0, { commentCount } = _mapUpdateRequests[_selUr.urId].urceData; idx < commentCount; idx++) {
                     const currComment = comments[idx];
                     if (currComment.getElementsByClassName('date urce').length === 0) {
@@ -1212,7 +1215,7 @@
                 }
             }
             if (_settings.reverseCommentSort && (_mapUpdateRequests[_selUr.urId].urceData.commentCount > 1)) {
-                const commentList = await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation.section .conversation-view .comment-list');
+                const commentList = await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation.section .conversation-view .comment-list');
                 if (commentList) {
                     const docFrags = document.createDocumentFragment(),
                         reverseCommentList = [...commentList.querySelectorAll('wz-list-item.comment')].reverse();
@@ -1225,12 +1228,12 @@
         if (_settings.autoSwitchToUrCommentsTab)
             autoSwitchToUrceTab();
         if (_settings.disableDoneNextButtons) {
-            domElement = await getDomElement('#panel-container wz-card[class^="panel"].problem-edit .actions .content .navigation');
+            domElement = await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit .actions .content .navigation');
             if (domElement)
                 domElement.style.display = 'none';
         }
-        (await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .focus'))?.addEventListener('click', recenterOnUr);
-        domElement = await getDomElement('textarea[id^=wz-textarea-]', '#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text');
+        (await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .focus'))?.addEventListener('click', recenterOnUr);
+        domElement = await getDomElement('textarea[id^=wz-textarea-]', '.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text');
         if (!domElement) {
             handleReadyError(true, true, 'handleUpdateRequestContainer', false, '');
             return;
@@ -1311,46 +1314,46 @@
             divElemDivDiv.appendChild(createElem('div', { class: 'currentDateText', textContent: `- ${I18n.t('urce.urPanel.CurrentDate')}` }));
             divElemDiv.appendChild(divElemDivDiv);
             divElemRoot.appendChild(divElemDiv);
-            domElement = document.querySelector('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form');
+            domElement = document.querySelector('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form');
             domElement.insertBefore(divElemRoot, domElement.firstChild);
         }
-        (await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button'))?.addEventListener('click', clickedSendToSendComment);
-        (await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button'))?.shadowRoot.appendChild(createElem('style', {
+        (await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button'))?.addEventListener('click', clickedSendToSendComment);
+        (await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button'))?.shadowRoot.appendChild(createElem('style', {
             textContent: '.wz-button.md { height: 30px !important; min-width: 60px !important; max-widt: 140px !important; padding: 0px 10px !important; overflow: hidden; }'
         }));
-        (await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .new-comment-text'))?.shadowRoot.appendChild(createElem('style', {
+        (await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .new-comment-text'))?.shadowRoot.appendChild(createElem('style', {
             textContent: '.wz-textarea textarea { font-size: 13px !important; line-height: 14px; padding: 6px !important; } '
                 + '.wz-textarea .length-text { font-size: 12px !important; padding: 2px 6px 0px 0px !important; }'
         }));
         if (!_urDataStateObserver.isObserving) {
-            _urDataStateObserver.observe(document.querySelector('#panel-container wz-card[class^="panel"].problem-edit'), {
+            _urDataStateObserver.observe(document.querySelector('.overlay-container wz-card[class^="panel"].problem-edit'), {
                 childList: false, attributes: true, attributeOldValue: true, characterData: false, characterDataOldValue: false, subtree: false
             });
             _urDataStateObserver.isObserving = true;
         }
         if (!_urCommentsObserver.isObserving) {
-            _urCommentsObserver.observe(document.querySelector('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation.section .conversation-view .comment-list'), {
+            _urCommentsObserver.observe(document.querySelector('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation.section .conversation-view .comment-list'), {
                 childList: true, attributes: false, attributeOldValue: false, characterData: false, characterDataOldValue: false, subtree: false
             });
             _urCommentsObserver.isObserving = true;
         }
         if (!(await isPanelReady('loadingMoreInfo', 10, 200)).error) {
-            domElement = await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .more-info');
+            domElement = await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .more-info');
             if (_settings.expandMoreInfo && W.problemsController.editController.adapter.isMoreInfoAvailable() && domElement.classList.contains('collapsed'))
-                (await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .more-info .title'))?.click();
+                (await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .more-info .title'))?.click();
             else if (!_settings.expandMoreInfo && !domElement.classList.contains('collapsed'))
-                (await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .more-info .title'))?.click();
+                (await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .more-info .title'))?.click();
         }
-        (await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .more-info .title'))?.addEventListener('click', expandMoreInfoCallback);
-        domElement = await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .reporter-preferences');
+        (await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .more-info .title'))?.addEventListener('click', expandMoreInfoCallback);
+        domElement = await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .reporter-preferences');
         if (_settings.expandUserPreferences && domElement.classList.contains('collapsed'))
-            (await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .reporter-preferences .title'))?.click();
+            (await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .reporter-preferences .title'))?.click();
         else if (!_settings.expandUserPreferences && !domElement.classList.contains('collapsed'))
-            (await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .reporter-preferences .title'))?.click();
-        (await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .reporter-preferences .title'))?.addEventListener('click', expandUserPreferencesCallback);
-        if ((await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation'))?.classList?.contains('collapsed'))
-            (await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .title'))?.click();
-        domElement = await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"]');
+            (await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .reporter-preferences .title'))?.click();
+        (await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .reporter-preferences .title'))?.addEventListener('click', expandUserPreferencesCallback);
+        if ((await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation'))?.classList?.contains('collapsed'))
+            (await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .title'))?.click();
+        domElement = await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"]');
         if (domElement)
             domElement.scrollTop = domElement.scrollHeight;
         autoScrollComments(_mapUpdateRequests[_selUr.urId].urceData.commentCount, 10, 1);
@@ -1411,17 +1414,17 @@
                 title = I18n.t('urce.prompts.PlaceNameFound');
             else
                 title = I18n.t('urce.prompts.VarFound').replaceAll('$VARSFOUND$', varsFound.join(', '));
-            document.querySelector('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button').setAttribute('title', title);
+            document.querySelector('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button').setAttribute('title', title);
         }
-        else if (document.querySelector('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button').disabled) {
-            document.querySelector('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button').disabled = false;
-            document.querySelector('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button').setAttribute('title', '');
+        else if (document.querySelector('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button').disabled) {
+            document.querySelector('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button').disabled = false;
+            document.querySelector('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button').setAttribute('title', '');
         }
     }
 
     async function handleClickedComment(commentNum, doubleClick) {
         _selUr.doubleClick = doubleClick;
-        const domElement = await getDomElement('textarea[id^=wz-textarea-]', '#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text');
+        const domElement = await getDomElement('textarea[id^=wz-textarea-]', '.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text');
         if (!domElement) {
             logWarning('No comment box found after clicking a comment from the list.');
             WazeWrap.Alerts.info(_SCRIPT_SHORT_NAME, I18n.t('urce.prompts.NoCommentBox'));
@@ -1435,7 +1438,7 @@
     }
 
     function autoSwitchToUrceTab() {
-        _restoreDrawerTab = document.getElementById('drawer')?.querySelector('[selected="true"]')?.querySelector('.w-icon') || 'none-selected';
+        _restoreDrawerTab = document.getElementById('drawer')?.querySelector('[selected]')?.querySelector('.w-icon') || 'none-selected';
         if (!_restoreDrawerTab.classList?.contains('w-icon-script'))
             document.querySelector('.w-icon-script').click();
         _restoreTab = _restoreTab || document.querySelector('#user-tabs .nav-tabs .active > a');
@@ -1447,7 +1450,7 @@
     }
 
     function autoSwitchToPrevTab() {
-        if (!document.querySelector('#panel-container .show')) {
+        if (!document.querySelector('.overlay-container .show')) {
             if (_restoreDrawerTab?.classList?.contains('w-icon-script')) {
                 if (_restoreTab) {
                     _restoreTab.click();
@@ -1472,7 +1475,7 @@
                 checkTimeout({ timeout: 'autoCloseUrPanel' });
                 if (tries > maxNumTries)
                     resolve({ error: true });
-                else if (document.querySelector('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .problem-data .more-info')?.classList?.contains('loading') === false)
+                else if (document.querySelector('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .problem-data .more-info')?.classList?.contains('loading') === false)
                     resolve({ error: false });
                 else
                     _timeouts.autoCloseUrPanel = window.setTimeout(retry, ++tries, retryInt, maxNumTries);
@@ -1487,18 +1490,18 @@
     }
 
     async function autoClickSendButton() {
-        (await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button'))?.click();
-        (await getDomElement('textarea[id^=wz-textarea-]', '#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text'))
+        (await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button'))?.click();
+        (await getDomElement('textarea[id^=wz-textarea-]', '.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text'))
             ?.removeEventListener('autoclicksendbutton', autoClickSendButton);
     }
 
     async function autoClickOpenSolvedNi(commentNum) {
         if ((_commentList[commentNum].urstatus === 'notidentified') && (_selUr.newStatus !== 'notidentified'))
-            (await getDomElement('#panel-container wz-card[class^="panel"].problem-edit .actions .content .controls-container input[value="not-identified"]'))?.click();
+            (await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit .actions .content .controls-container input[value="not-identified"]'))?.click();
         else if ((_commentList[commentNum].urstatus === 'solved') && (_selUr.newStatus !== 'solved'))
-            (await getDomElement('#panel-container wz-card[class^="panel"].problem-edit .actions .content .controls-container input[value="solved"]'))?.click();
+            (await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit .actions .content .controls-container input[value="solved"]'))?.click();
         else if ((_commentList[commentNum].urstatus === 'open') && ((_selUr.newStatus === 'solved') || (_selUr.newStatus === 'notidentified')))
-            (await getDomElement('#panel-container wz-card[class^="panel"].problem-edit .actions .content .controls-container input[value="open"]'))?.click();
+            (await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit .actions .content .controls-container input[value="open"]'))?.click();
     }
 
     function autoZoomIn() {
@@ -1515,7 +1518,7 @@
     }
 
     function autoZoomOut() {
-        if (_restoreZoom && !document.querySelector('#panel-container .show')) {
+        if (_restoreZoom && !document.querySelector('.overlay-container .show')) {
             if (_restoreZoom !== W.map.getOLMap().getZoom()) {
                 W.map.getOLMap().zoomTo(_restoreZoom);
                 _restoreZoom = null;
@@ -1842,7 +1845,7 @@
     async function handleClickedShortcut() {
         const shortcut = this.id.substring(14);
         doSpinner('handleClickedShortcut', true);
-        let domElement = await getDomElement('textarea[id^=wz-textarea-]', '#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text');
+        let domElement = await getDomElement('textarea[id^=wz-textarea-]', '.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text');
         if (!domElement) {
             handleReadyError(false, true, 'handleClickedShortcut', true, 'UR panel comment box is missing.');
             return;
@@ -1965,7 +1968,7 @@
                 doSpinner('handleClickedShortcut', false);
                 return;
             }
-            domElement = await getDomElement('textarea[id^=wz-textarea-]', '#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text');
+            domElement = await getDomElement('textarea[id^=wz-textarea-]', '.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text');
             if (!domElement) {
                 logWarning('Timed out waiting for DOM elements before setting value of comment box after clicking a shortcut with setSelectionRange.');
             }
@@ -1978,7 +1981,7 @@
             }
         }
         else if (useCurrVal) {
-            domElement = await getDomElement('textarea[id^=wz-textarea-]', '#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text');
+            domElement = await getDomElement('textarea[id^=wz-textarea-]', '.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text');
             if (!domElement) {
                 logWarning('Timed out waiting for DOM elements before setting value of comment box after clicking a shortcut without setSelectionRange.');
             }
@@ -1999,10 +2002,11 @@
         const comment = formatText(_commentList[_defaultComments.dr.commentNum].comment, true, false, urId);
         try {
             if (/\B\$\S*\$\B/gm.test(comment) || /(\$SELSEGS|\$USERNAME|\$URD)/gm.test(comment))
-                throw new Error(`Did not auto-post reminder comment for urId ${urId} because a variable was not replaced.`);
+               throw new Error(`Did not auto-post reminder comment for urId ${urId} because a variable was not replaced.`);
             if (!W.model.updateRequestSessions.getObjectById(urId)) {
                 const data = await W.controller.descartesClient.getUpdateRequestSessionsByIds([urId]);
-                if (data.updateRequestSessions.objects.length > 0)
+                console.log(data)
+                if (data[0].updateRequestSessions.objects.length > 0)
                     W.model.mergeResponse(data);
                 else
                     throw new Error(`Failed to merge updateRequestSession for urId ${urId}`);
@@ -2023,7 +2027,7 @@
             cursorPos,
             newCursorPos,
             postNls = 0;
-        let domElement = await getDomElement('textarea[id^=wz-textarea-]', '#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text');
+        let domElement = await getDomElement('textarea[id^=wz-textarea-]', '.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text');
         if (!domElement) {
             logError('UR panel comment box is missing at beginning of postUrComment function.');
             handleReadyError(false, true, 'postUrComment', true, 'UR panel comment box is missing.');
@@ -2068,7 +2072,7 @@
             logError(I18n.t('urce.prompts.CommentTooLong'));
         }
         else {
-            domElement = await getDomElement('textarea[id^=wz-textarea-]', '#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text');
+            domElement = await getDomElement('textarea[id^=wz-textarea-]', '.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text');
             if (!domElement) {
                 logError('Timed out waiting on text box to set value with setSelectionRange.');
                 handleReadyError(false, true, 'postUrComment', true, 'UR panel comment box is missing.');
@@ -3045,8 +3049,8 @@
                                     && !urceData.containsSquareBrackets
                                     && ((+W.loginManager.user.getRank() > 2) || ((+W.loginManager.user.getRank() === 2) && W.loginManager.user.getAttribute('isAreaManager')))
                                     && !chunk[idx].getAttribute('autoSentReminder')
-                                )
-                                    autoSendReminder = true;
+                                ){
+                                    autoSendReminder = true;}
                                 else
                                     urceData.needsReminder = true;
                             }
@@ -3533,7 +3537,7 @@
                 domElement.insertBefore(divElemRoot, domElement.firstChild);
             }
             if (maskUrPanel && !document.getElementById(`urPanelLightbox-${phase}`)) {
-                const domElement = await getDomElement('#panel-container wz-card[class^="panel"].problem-edit');
+                const domElement = await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit');
                 if (!domElement) {
                     handleReadyError(false, false, '', false, 'Timed out trying to add mask to UR panel.');
                 }
@@ -3557,7 +3561,7 @@
                 logWarning(`Timed out trying to scroll to the bottom. commentCount: ${commentCountInt}, tries: ${tries}, retryInt: ${retryInt}, maxTries: ${maxTries}`);
                 return;
             }
-            const commentList = await getDomElement('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation.section .conversation-view .comment-list');
+            const commentList = await getDomElement('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation.section .conversation-view .comment-list');
             if (commentList && (commentCountInt > 0)
                 && (commentCountInt === commentList.children.length)
                 && (!_settings.autoScrollComments
@@ -4063,7 +4067,7 @@
                 appendModeToggle = function () {
                     _settings[this.id.substring(3)] = this.checked;
                     if (W.problemsController.editController.adapter.problem) {
-                        document.querySelector('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text')
+                        document.querySelector('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-text')
                             .shadowRoot.querySelector('textarea[id^=wz-textarea-]').style.backgroundColor = this.checked ? 'peachpuff' : '';
                     }
                     saveSettingsToStorage();
@@ -4467,7 +4471,7 @@
                     _saveButtonObserver.isObserving = true;
                 }
                 if (!_urPanelContainerObserver.isObserving) {
-                    _urPanelContainerObserver.observe(document.getElementById('panel-container'), {
+                    _urPanelContainerObserver.observe(document.getElementsByClassName('overlay-container')[0], {
                         childList: true, attributes: true, attributeOldValue: true, characterData: false, characterDataOldValue: false, subtree: true
                     });
                     _urPanelContainerObserver.isObserving = true;
@@ -4677,29 +4681,29 @@
                 + '#urceShortcuts i.URCE-chevron { font-weight:900; }'
                 + '#urceShortcutsExpand { padding-bottom:4px; font-size:13px; cursor:pointer; border-bottom:1px solid darkgray; }'
                 + '#urceShortcutsExpandDiv { border-bottom:1px solid darkgray; padding: 5px 0 5px 0; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit { width:380px; max-height:87vh; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit.problem-edit { --wz-card-width: 100%; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit>* { max-height:87vh; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit .conversation-view .comment-list { padding: 0px 6px; margin-bottom: 6px; max-height: 26vh; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit .conversation-view .new-comment-form .new-comment-text { margin-bottom: 0px; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit .conversation-view .comment .comment-title .date.urce { display: flex; justify-content: flex-end; margin-top: -4px; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit .issue-panel-header { padding-top: 5px; padding-bottom: 5px; font-size: 12px; line-height: 14px; padding-right: 0px; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit .issue-panel-header .main-title { font-size: 14px; line-height: 14px; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit .issue-panel-header .dot { top: 6px; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit .section .content { padding: 5px 12px; font-size: 12px; line-height: 14px; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit .section .content .URCE-divDesc { max-height: 82px; overflow-y: auto; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit .section .title { padding: 0 6px 0 6px; font-size: 13px; line-height: 13px; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit .actions .controls-container { margin-top: -2px; margin-bottom: -2px; text-align: center; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit .more-info .more-info-checkbox label { font-size: 12px; line-height: 14px; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit .actions .controls-container label[for|="state"] { height: 22px; width: unset; min-width: 162px; line-height: 26px; margin: 2px; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit[data-state="open"] .actions .controls-container label[for="state-solved"]  { display: inline-block; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit[data-state="open"] .actions .controls-container label[for|="state-not-identified"] { display: inline-block; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit[data-state="solved"] .actions .controls-container label[for|="state-open"], '
-                + '     #panel-container wz-card[class^="panel"].problem-edit[data-state="not-identified"] .actions .controls-container label[for|="state-open"] { display: inline-block !important; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit[data-state="not-identified"] .actions .controls-container label[for|="state-not-identified"], '
-                + '     #panel-container wz-card[class^="panel"].problem-edit[data-state="not-identified"] .actions .controls-container label[for|="state-solved"] { display: none !important; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit .actions .navigation .waze-plain-btn { height: 30px; line-height: 18px; font-size: 13px; }'
-                + '#panel-container wz-card[class^="panel"].problem-edit .actions .no-permissions-alert { margin-bottom: 8px; margin-top: 2px; padding: 4px; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit { width:380px; max-height:87vh; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit.problem-edit { --wz-card-width: 100%; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit>* { max-height:87vh; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit .conversation-view .comment-list { padding: 0px 6px; margin-bottom: 6px; max-height: 26vh; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit .conversation-view .new-comment-form .new-comment-text { margin-bottom: 0px; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit .conversation-view .comment .comment-title .date.urce { display: flex; justify-content: flex-end; margin-top: -4px; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit .issue-panel-header { padding-top: 5px; padding-bottom: 5px; font-size: 12px; line-height: 14px; padding-right: 0px; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit .issue-panel-header .main-title { font-size: 14px; line-height: 14px; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit .issue-panel-header .dot { top: 6px; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit .section .content { padding: 5px 12px; font-size: 12px; line-height: 14px; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit .section .content .URCE-divDesc { max-height: 82px; overflow-y: auto; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit .section .title { padding: 0 6px 0 6px; font-size: 13px; line-height: 13px; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit .actions .controls-container { margin-top: -2px; margin-bottom: -2px; text-align: center; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit .more-info .more-info-checkbox label { font-size: 12px; line-height: 14px; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit .actions .controls-container label[for|="state"] { height: 22px; width: unset; min-width: 162px; line-height: 26px; margin: 2px; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit[data-state="open"] .actions .controls-container label[for="state-solved"]  { display: inline-block; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit[data-state="open"] .actions .controls-container label[for|="state-not-identified"] { display: inline-block; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit[data-state="solved"] .actions .controls-container label[for|="state-open"], '
+                + '     .overlay-container wz-card[class^="panel"].problem-edit[data-state="not-identified"] .actions .controls-container label[for|="state-open"] { display: inline-block !important; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit[data-state="not-identified"] .actions .controls-container label[for|="state-not-identified"], '
+                + '     .overlay-container wz-card[class^="panel"].problem-edit[data-state="not-identified"] .actions .controls-container label[for|="state-solved"] { display: none !important; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit .actions .navigation .waze-plain-btn { height: 30px; line-height: 18px; font-size: 13px; }'
+                + '.overlay-container wz-card[class^="panel"].problem-edit .actions .no-permissions-alert { margin-bottom: 8px; margin-top: 2px; padding: 4px; }'
                 // Map content
                 + '.urceCountersPill { color:black; position:absolute; top:30px; display:block; width:auto; white-space:nowrap; padding-left:5px; padding-right:5px; border:1px solid; border-radius:25px; }'
                 // URCE Lightbox
@@ -4711,7 +4715,7 @@
     function initCommentsTab() {
         logDebug('Initializing Comments tab.');
         const zoomOutLinkClicked = function () {
-            if (document.querySelector('#panel-container wz-card[class^="panel"].problem-edit div[class^="container"] .close-panel'))
+            if (document.querySelector('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .close-panel'))
                 autoCloseUrPanel();
             W.map.getOLMap().zoomTo(+this.getAttribute('zoomTo'));
         };
@@ -4971,9 +4975,9 @@
                 }
                 if (settingName === 'disableDoneNextButtons') {
                     if (this.checked)
-                        document.querySelector('#panel-container .content .navigation').style.display = 'none';
+                        document.querySelector('.overlay-container .content .navigation').style.display = 'none';
                     else
-                        document.querySelector('#panel-container .content .navigation').style.display = '';
+                        document.querySelector('.overlay-container .content .navigation').style.display = '';
                 }
                 if (settingName === 'hideZoomOutLinks') {
                     if (this.checked)
@@ -6030,7 +6034,7 @@
     function initCheckForUrPanel(urId, tries) {
         checkTimeout({ timeout: 'initUrIdInUrl' });
         if (tries < 150) {
-            if (document.getElementById('panel-container')?.children.length === 0) {
+            if (document.getElementsByClassName('overlay-container')[0]?.children.length === 0) {
                 if (document.querySelectorAll(`.map-problem.user-generated[data-id="${urId}"]`)?.length > 0)
                     openUrPanel(urId, true);
                 else
@@ -6079,19 +6083,19 @@
                                 maskBoxes(undefined, true, 'init', (urIdInUrl > 0));
                             });
                         }
-                        else if (document.getElementById('panel-container')?.children.length === 0) {
+                        else if (document.getElementsByClassName('overlay-container')[0]?.children.length === 0) {
                             logDebug(`urId ${urIdInUrl} found in URL, but the UR panel has not shown up yet. Waiting up to 15 seconds.`);
                             _initUrIdInUrlObserver = new MutationObserver((mutations) => {
                                 mutations.forEach((mutation) => {
                                     if ((mutation.type === 'attributes')
-                                        && mutation.target.parentNode.matches('#panel-container')
+                                        && mutation.target.parentNode.matches('.overlay-container')
                                         && mutation.target.classList.contains('show')
                                         && !mutation.oldValue.includes('show')
                                     )
                                         initFinish(urIdInUrl, false);
                                 });
                             });
-                            _initUrIdInUrlObserver.observe(document.getElementById('panel-container'), {
+                            _initUrIdInUrlObserver.observe(document.getElementsByClassName('overlay-container')[0], {
                                 childList: true, attributes: true, attributeOldValue: true, characterData: true, characterDataOldValue: true, subtree: true
                             });
                             _initUrIdInUrlObserver.isObserving = true;
