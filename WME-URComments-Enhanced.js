@@ -1404,6 +1404,7 @@
 
     function checkValue() {
         const varsFound = this.value.match(/\B\$\S*\$\B/gm) || this.value.match(/(\$SELSEGS|\$USERNAME|\$URD)/gm);
+        const sendButton = document.querySelector('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button');
         if (varsFound) {
             let title;
             if (this.value.includes('$SELSEGS'))
@@ -1414,11 +1415,14 @@
                 title = I18n.t('urce.prompts.PlaceNameFound');
             else
                 title = I18n.t('urce.prompts.VarFound').replaceAll('$VARSFOUND$', varsFound.join(', '));
-            document.querySelector('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button').setAttribute('title', title);
+            sendButton.setAttribute('title', title);
+            setTimeout(() => {
+                sendButton.disabled = true
+            }, 100);
         }
-        else if (document.querySelector('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button').disabled) {
-            document.querySelector('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button').disabled = false;
-            document.querySelector('.overlay-container wz-card[class^="panel"].problem-edit div[class^="container"] .body .conversation .new-comment-form .send-button').setAttribute('title', '');
+        else if (sendButton.disabled) {
+            sendButton.disabled = false;
+            sendButton.setAttribute('title', '');
         }
     }
 
